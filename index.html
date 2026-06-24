@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yangtianxia — 前端开发</title>
+  <meta name="description" content="热爱生活，善于发现。">
+  <meta name="author" content="yangtianxia">
+  <link rel="canonical" href="https://yangtianxia.github.io/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://yangtianxia.github.io/">
+  <meta property="og:title" content="yangtianxia — 前端开发">
+  <meta property="og:description" content="热爱生活，善于发现。">
+  <meta property="og:image" content="https://github.com/yangtianxia.png">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="yangtianxia — 前端开发">
+  <meta name="twitter:description" content="热爱生活，善于发现。">
+  <meta name="twitter:image" content="https://github.com/yangtianxia.png">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230a0a0a'/><text x='50%' y='50%' font-size='20' text-anchor='middle' dominant-baseline='central' fill='%23fff' font-family='monospace'>y</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #0a0a0a;
+      --text:   #efefef;
+      --text-2: #666;
+      --text-3: #333;
+      --border: #1e1e1e;
+      --mono: 'Space Mono', monospace;
+      --sans: 'Space Grotesk', system-ui, sans-serif;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+
+    /* ── Layout ── */
+    .page {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 32px 52px 40px;
+    }
+
+    /* ── Nav ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-logo:hover { color: var(--text); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Main ── */
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-name {
+      font-family: 'Bebas Neue', var(--sans);
+      font-size: clamp(80px, 14vw, 172px);
+      font-weight: 400;
+      line-height: .9;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      margin-bottom: 44px;
+    }
+    .hero-name .d { color: #484848; }
+
+    .hero-bottom {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 40px;
+      border-top: 1px solid #222;
+      padding-top: 28px;
+    }
+
+    .hero-left { display: flex; flex-direction: column; gap: 18px; }
+
+    .hero-tagline {
+      font-size: clamp(16px, 2vw, 22px);
+      color: #999;
+      line-height: 1.6;
+      font-weight: 300;
+      letter-spacing: .01em;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    .hero-city {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: #555;
+      letter-spacing: .1em;
+    }
+    .hero-avatar {
+      width: clamp(48px, 5vw, 64px);
+      height: clamp(48px, 5vw, 64px);
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .copyright {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: #555;
+      letter-spacing: .08em;
+    }
+
+    /* ── Typewriter ── */
+    #name-el { min-height: calc(clamp(72px, 13vw, 160px) * 1.84); }
+    .t-cursor {
+      font-size: .45em;
+      color: var(--text-2);
+      vertical-align: baseline;
+      animation: cur-blink .7s step-end infinite;
+    }
+    @keyframes cur-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* ── Entrance ── */
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity .55s, transform .55s; }
+    .reveal.in { opacity: 1; transform: none; }
+    .d1 { transition-delay: .05s; }
+    .d2 { transition-delay: .15s; }
+    .d3 { transition-delay: .25s; }
+    .d4 { transition-delay: .35s; }
+
+    /* ── Projects Popover ── */
+    .nav-pop-wrap { position: relative; }
+    .nav-pop-wrap::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 14px; }
+    .nav-pop-btn {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-2);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color .2s;
+    }
+    .nav-pop-btn:hover, .nav-pop-wrap:hover .nav-pop-btn { color: var(--text); }
+    .nav-pop {
+      position: absolute;
+      top: calc(100% + 14px);
+      right: 0;
+      min-width: 176px;
+      background: #111;
+      border: 1px solid #222;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-6px);
+      transition: opacity .15s, transform .15s;
+    }
+    .nav-pop.open,
+    .nav-pop-wrap:hover .nav-pop { opacity: 1; pointer-events: auto; transform: none; }
+    .nav-pop a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-2);
+      text-decoration: none;
+      transition: color .15s, background .15s;
+    }
+    .nav-pop a + a { border-top: 1px solid #1a1a1a; }
+    .nav-pop a:hover { color: var(--text); background: #181818; }
+    .nav-pop a span:last-child { color: var(--text-3); }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .page { padding: 28px 24px; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="noise-bg" style="position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:0"></canvas>
+
+<div class="page">
+  <nav>
+    <a href="/" class="nav-logo">yangtianxia</a>
+    <ul class="nav-links">
+      <li class="nav-pop-wrap">
+        <button class="nav-pop-btn" id="proj-btn">Projects</button>
+        <div class="nav-pop" id="proj-pop">
+          <a href="https://yangtianxia.dev/ua-browser" target="_blank" rel="noopener"><span>ua-browser</span><span>↗</span></a>
+          <a href="https://yangtianxia.dev/image-to-base64" target="_blank" rel="noopener"><span>image-to-base64</span><span>↗</span></a>
+        </div>
+      </li>
+      <li><a href="https://github.com/yangtianxia" target="_blank" rel="noopener">GitHub ↗</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <h1 class="hero-name" id="name-el"></h1>
+
+    <div class="hero-bottom">
+      <div class="hero-left">
+        <p class="hero-tagline reveal d2">热爱生活，善于发现。</p>
+        <span class="copyright">© 2026</span>
+      </div>
+      <div class="hero-right reveal d3">
+        <img class="hero-avatar" src="https://github.com/yangtianxia.png" alt="yangtianxia">
+        <span class="hero-city">厦门，中国</span>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+
+  // ── Flowing noise background ──
+  (function () {
+    const cv  = document.getElementById('noise-bg');
+    const ctx = cv.getContext('2d');
+    const R   = 4; // render at 1/4 res, browser scales up smoothly
+    let W, H, img;
+
+    function resize() {
+      W = Math.ceil(window.innerWidth  / R);
+      H = Math.ceil(window.innerHeight / R);
+      cv.width  = W;
+      cv.height = H;
+      img = ctx.createImageData(W, H);
+      // pre-fill alpha channel
+      for (let i = 3; i < img.data.length; i += 4) img.data[i] = 255;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let t = 0;
+    (function tick() {
+      const d = img.data;
+      for (let y = 0; y < H; y++) {
+        const ny = y / H;
+        for (let x = 0; x < W; x++) {
+          const nx = x / W;
+
+          // Three-octave layered sine noise
+          const n1 = Math.sin(nx * 7.3  + t * 0.22)  * Math.cos(ny * 5.8  - t * 0.17);
+          const n2 = Math.sin(nx * 14.1 - t * 0.38 + ny * 4.9) * Math.cos(ny * 11.3 + t * 0.29);
+          const n3 = Math.sin((nx * 0.7  + ny * 0.3) * 19.5 + t * 0.51);
+          const n  = n1 * 0.50 + n2 * 0.33 + n3 * 0.17; // -1 … 1
+
+          // Map to brightness: bg is #0a0a0a (10), brightest spot ~#484848 (72)
+          const raw = Math.max(0, n - 0.22) / 0.78;
+          const v   = Math.round(10 + raw * raw * 62);
+
+          const i = (y * W + x) * 4;
+          d[i] = d[i + 1] = d[i + 2] = v;
+        }
+      }
+      ctx.putImageData(img, 0, 0);
+      t += 0.013;
+      requestAnimationFrame(tick);
+    })();
+  })();
+
+  // Reveal (for hero-bottom elements)
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.05 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // ── Typewriter ──
+  (function () {
+    const el     = document.getElementById('name-el');
+    const SPEED  = 210;
+
+    const s1 = document.createElement('span');
+    const s2 = document.createElement('span');
+    s2.className = 'd';
+    const cur = document.createElement('span');
+    cur.className = 't-cursor';
+    cur.textContent = '_';
+
+    // Start: just cursor on line 1
+    el.append(s1, cur);
+
+    const seq = [
+      ...Array.from('Yang').map(c => () => s1.textContent += c),
+      () => { el.append(document.createElement('br'), s2, cur); }, // move cursor to line 2
+      ...Array.from('Tianxia').map(c => () => s2.textContent += c),
+      () => setTimeout(() => cur.remove(), 1000),
+    ];
+
+    let i = 0;
+    (function next() {
+      if (i >= seq.length) return;
+      seq[i++]();
+      setTimeout(next, i === 5 ? SPEED * 2.5 : SPEED); // slight pause after line 1
+    })();
+  })();
+
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Yang Tianxia",
+  "url": "https://yangtianxia.github.io",
+  "image": "https://github.com/yangtianxia.png",
+  "jobTitle": "Frontend Engineer",
+  "sameAs": ["https://github.com/yangtianxia"]
+}
+</script>
+</body>
+</html>
